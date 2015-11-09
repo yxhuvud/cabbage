@@ -1,5 +1,5 @@
 # coding: utf-8
-module Earley
+module Cabbage
   struct LR0
     property rule
     property dot

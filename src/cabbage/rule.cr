@@ -1,4 +1,4 @@
-struct Earley::Rule
+struct Cabbage::Rule
   property symbol
   property production
   property action

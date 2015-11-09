@@ -1,4 +1,4 @@
-# earley
+# cabbage
 
 TODO: Write a description here
 
@@ -9,8 +9,8 @@ Add this to your application's `shard.yml`:
 
 ```yaml
 dependencies:
-  earley:
-    github: [your-github-name]/earley
+  cabbage:
+    github: [your-github-name]/cabbage
 ```
 
 
@@ -18,7 +18,7 @@ dependencies:
 
 
 ```crystal
-require "earley"
+require "cabbage"
 ```
 
 
@@ -30,7 +30,7 @@ TODO: Write development instructions here
 
 ## Contributing
 
-1. Fork it ( https://github.com/[your-github-name]/earley/fork )
+1. Fork it ( https://github.com/[your-github-name]/cabbage/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)

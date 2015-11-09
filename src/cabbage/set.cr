@@ -1,4 +1,4 @@
-module Earley
+module Cabbage
   alias Nonterminal = Symbol
   alias Terminal = Char
   alias GrammarSymbol = Nonterminal | Terminal

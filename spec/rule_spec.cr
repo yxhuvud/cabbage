@@ -1,10 +1,10 @@
 require "./spec_helper"
 
 def rule
-  Earley::Rule.new(:X, ['x', :X, :Y], nil)
+  Cabbage::Rule.new(:X, ['x', :X, :Y], nil)
 end
 
-describe Earley::Rule do
+describe Cabbage::Rule do
   it "has size" do
     rule.size.should eq(3)
   end

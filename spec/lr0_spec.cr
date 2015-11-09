@@ -2,26 +2,26 @@
 require "./spec_helper"
 
 def lr0
-  rule = Earley::Rule.new(:X, ['x', :X, :Y], nil)
-  Earley::LR0.new rule, 0
+  rule = Cabbage::Rule.new(:X, ['x', :X, :Y], nil)
+  Cabbage::LR0.new rule, 0
 end
 
 def lr1
-  rule = Earley::Rule.new(:X, ['x', :X, :Y], nil)
-  Earley::LR0.new rule, 1
+  rule = Cabbage::Rule.new(:X, ['x', :X, :Y], nil)
+  Cabbage::LR0.new rule, 1
 end
 
 def lr2
-  rule = Earley::Rule.new(:X, ['x', :X, :Y], nil)
-  Earley::LR0.new rule, 2
+  rule = Cabbage::Rule.new(:X, ['x', :X, :Y], nil)
+  Cabbage::LR0.new rule, 2
 end
 
 def lr3
-  rule = Earley::Rule.new(:X, ['x', :X, :Y], nil)
-  Earley::LR0.new rule, 3
+  rule = Cabbage::Rule.new(:X, ['x', :X, :Y], nil)
+  Cabbage::LR0.new rule, 3
 end
 
-describe Earley::LR0 do
+describe Cabbage::LR0 do
   describe :lr0 do
     it "#to_s" do
       lr0.to_s.should eq("X -> ·'x'XY")

@@ -1,2 +1,2 @@
 require "spec"
-require "../src/earley"
+require "../src/cabbage"

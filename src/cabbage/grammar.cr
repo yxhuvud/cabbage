@@ -1,4 +1,4 @@
-class Earley::Grammar
+class Cabbage::Grammar
   property start
   property rules
 
@@ -6,7 +6,7 @@ class Earley::Grammar
   end
 
   def parse(input)
-    s0 = Earley::Set.new(self, 0)
+    s0 = Cabbage::Set.new(self, 0)
     s0.predict start
     s0.process
     sets = [s0]

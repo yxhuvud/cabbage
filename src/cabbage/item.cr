@@ -1,4 +1,4 @@
-module Earley
+module Cabbage
   # Fixme: Change to struct when derivations are known to work.
   # Requires pointer magic to avoid recursive structs.
   class Item

@@ -1,4 +1,4 @@
-module Earley
+module Cabbage
   class Derivation
     property left
     property right
