@@ -1,7 +1,15 @@
 require "./spec_helper"
 
 describe Cabbage do
-  # TODO: Write tests
+  it "handles trivial grammars" do
+    x = Cabbage::Grammar.new :S, {
+      :S => [
+        Cabbage::Rule.new(:S, [:S, 'b'], nil),
+        Cabbage::Rule.new(:S, ['b'] of Cabbage::GrammarSymbol, nil),
+      ],
+    }
+    x.parse "b"
+  end
 
   it "works" do
     x = Cabbage::Grammar.new :S, {
