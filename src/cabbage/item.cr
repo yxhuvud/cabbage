@@ -11,7 +11,7 @@ module Cabbage
     property next_derivation
 
     def to_s
-      "<#{tag.to_s} :: #{start.position}<->#{stop.position}>"
+      "#{tag.to_s} #{start.position}-#{stop.position}"
     end
 
     def initialize(@tag, @start, @stop)

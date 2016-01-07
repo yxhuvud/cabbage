@@ -19,13 +19,15 @@ module Cabbage
     end
 
     def to_s
-      puts "SET: #{position}"
-      p :has
-      puts "  " + items.map(&.to_s).join("\n  ")
-      p :wants
-      puts "  " + wants.map { |k, v|
-        "#{k}: #{v.map(&.to_s)}"
-      }.join("\n  ")
+      <<-EOS
+SET: #{position}
+has:
+#{"  " + items.map(&.to_s).join("\n  ")}
+wants:
+#{wants.map { |k, v|
+                                                                                       "<#{k}> #{v.map(&.to_s).join(", ")}"
+                                                                                     }.join("\n")}
+      EOS
     end
 
     def add_item(tag, start)

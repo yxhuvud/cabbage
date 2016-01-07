@@ -24,7 +24,7 @@ end
 describe Cabbage::LR0 do
   describe :lr0 do
     it "#to_s" do
-      lr0.to_s.should eq("X -> ·'x'XY")
+      lr0.to_s.should eq("X: ·'x'XY")
     end
 
     it "#next_symbol" do
@@ -42,7 +42,7 @@ describe Cabbage::LR0 do
 
   describe :lr1 do
     it "#to_s" do
-      lr1.to_s.should eq("X -> 'x'·XY")
+      lr1.to_s.should eq("X: 'x'·XY")
     end
 
     it "#next_symbol" do
@@ -62,7 +62,7 @@ describe Cabbage::LR0 do
 
   describe :lr3 do
     it "#to_s" do
-      lr3.to_s.should eq("X -> 'x'XY·")
+      lr3.to_s.should eq("X: 'x'XY·")
     end
 
     it "#next_symbol" do

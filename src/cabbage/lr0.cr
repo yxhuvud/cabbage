@@ -8,7 +8,7 @@ module Cabbage
     end
 
     def to_s
-      "#{rule.symbol} -> " +
+      "#{rule.symbol}: " +
         rule.pretty_production(0, @dot) +
         "·" +
         rule.pretty_production(@dot, @rule.size)
