@@ -1,3 +1,4 @@
+require "./cabbage/derivation"
 require "./cabbage/item"
 require "./cabbage/*"
 
