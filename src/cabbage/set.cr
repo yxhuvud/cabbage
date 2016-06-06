@@ -14,35 +14,44 @@ module Cabbage
 
     def initialize(@grammar, @position)
       @items = [] of Item
-      @index = {} of TagPair       => Item
+      @index = {} of TagPair => Item
       @wants = {} of GrammarSymbol => Array(Item)
     end
 
     def to_s
+      wants = wants.map { |k, v|
+        "<#{k}> #{v.map(&.to_s).join(", ")}"
+      }.join("\n")
       <<-EOS
-SET: #{position}
-has:
-#{"  " + items.map(&.to_s).join("\n  ")}
-wants:
-#{wants.map { |k, v|
-                                                                                       "<#{k}> #{v.map(&.to_s).join(", ")}"
-                                                                                     }.join("\n")}
-      EOS
+  SET: #{position}
+  has:
+  #{"  " + items.map(&.to_s).join("\n  ")}
+  wants:
+  #{wants}
+  EOS
     end
 
     def add_item(tag, start)
       key = TagPair.new(tag, start.position)
-      if index.has_key?(key)
+      if has_item?(key)
         index[key]
       else
         append_item(tag, start)
       end
     end
 
+    def has_item?(key)
+      index.has_key?(key)
+    end
+
+    def register_item(tag_par, item)
+      index[tag_par] = item
+    end
+
     def append_item(tag, start)
       item = Item.new(tag, start, self)
       items << item
-      index[TagPair.new(tag, start.position)] = item
+      register_item(TagPair.new(tag, start.position), item)
       return item if tag.is_a?(GrammarSymbol)
       sym = tag.next_symbol
       # fixme nullable check
@@ -72,9 +81,18 @@ wants:
     def process
       old = items.size
       process_once
+      # Fixme this is silly.
       while (items.size > old)
         old = items.size
         process_once
+      end
+    end
+
+    def each_wanted_for(tag)
+      if wants.has_key?(tag)
+        wants[tag].each do |item|
+          yield item
+        end
       end
     end
 

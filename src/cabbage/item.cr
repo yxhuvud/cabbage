@@ -18,12 +18,10 @@ module Cabbage
     end
 
     def complete
-      if start.wants.has_key?(tag)
-        start.wants[tag].each do |item|
-          next_tag = item.tag as LR0
-          added = stop.add_item(next_tag.advance, item.start)
-          added.add_derivation(item, self)
-        end
+      start.each_wanted_for(tag) do |item|
+        next_tag = item.tag as LR0
+        added = stop.add_item(next_tag.advance, item.start)
+        added.add_derivation(item, self)
       end
     end
   end
