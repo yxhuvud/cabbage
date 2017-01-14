@@ -1,7 +1,7 @@
 struct Cabbage::Rule
-  property symbol
-  property production
-  property action
+  property symbol : GrammarSymbol
+  property production : Array(GrammarSymbol)
+  property action : Proc(GrammarSymbol, Array(GrammarSymbol))?
   property wants_sym
 
   def initialize(@symbol, @production, @action)

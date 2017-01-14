@@ -1,8 +1,8 @@
 # coding: utf-8
 module Cabbage
   struct LR0
-    property rule
-    property dot
+    property rule : Rule
+    property dot : Int32
 
     def initialize(@rule, @dot)
     end

@@ -1,31 +1,32 @@
 class Cabbage::Parser
-  getter grammar
-  getter sets
-  getter current
+  getter grammar : Grammar
+  getter sets : Array(Set)
+  getter current : Set
 
   @current : Cabbage::Set
 
   def initialize(@grammar)
     @current = Cabbage::Set.new(grammar, 0)
-    @sets = [@current]
-    @current.predict grammar.start
-    @current.process
+    @sets = [current]
+    current.predict grammar.start
+    current.process
   end
 
   def consume_char(c)
     puts current.to_s
     puts "scanned #{c}"
-    @current = @current.scan(c)
-    @current.process
-    sets << @current
+    @current = current.scan(c)
+    current.process
+    sets << current
   end
 
   def process(input)
     input.each_char { |c| consume_char(c) }
   end
 
+  # Fixme: Support for multiples.
   def accepted_rule
-    TagPair.new(grammar.start, 0)
+    {grammar.start, 0}
   end
 
   def accepted_item?

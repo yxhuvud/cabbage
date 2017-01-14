@@ -1,6 +1,6 @@
 struct Cabbage::Grammar
-  property start
-  property rules
+  property start : GrammarSymbol
+  property rules : Hash(Nonterminal, Array(Rule))
 
   def initialize(@start, @rules)
   end

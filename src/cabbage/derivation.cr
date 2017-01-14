@@ -1,8 +1,8 @@
 module Cabbage
   module Derivation
-    property left
-    property right
-    property next_derivation
+    property left : Derivation?
+    property right : Derivation?
+    property next_derivation : Derivation?
 
     def add_derivation(left, right)
       puts

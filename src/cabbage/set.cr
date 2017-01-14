@@ -3,14 +3,14 @@ module Cabbage
   alias Terminal = Char
   alias GrammarSymbol = Nonterminal | Terminal
   alias Tag = LR0 | GrammarSymbol
-  record TagPair, tag, pos
+  alias TagPair = Tuple(Tag, Int32)
 
   struct Set
-    property grammar
-    property position
-    property items
-    property index
-    property wants
+    property grammar : Grammar
+    property position : Int32
+    property items : Array(Item)
+    property index : Hash(TagPair, Item)
+    property wants : Hash(GrammarSymbol, Array(Item))
 
     def initialize(@grammar, @position)
       @items = [] of Item
@@ -19,7 +19,7 @@ module Cabbage
     end
 
     def to_s
-      wants = wants.map { |k, v|
+      w = wants.map { |k, v|
         "<#{k}> #{v.map(&.to_s).join(", ")}"
       }.join("\n")
       <<-EOS
@@ -27,14 +27,13 @@ module Cabbage
   has:
   #{"  " + items.map(&.to_s).join("\n  ")}
   wants:
-  #{wants}
+  #{w}
   EOS
     end
 
     def add_item(tag, start)
-      key = TagPair.new(tag, start.position)
-      if has_item?(key)
-        index[key]
+      if has_item?({tag, start.position})
+        index[{tag, start.position}]
       else
         append_item(tag, start)
       end
@@ -44,8 +43,8 @@ module Cabbage
       index.has_key?(key)
     end
 
-    def register_item(tag_par, item)
-      index[tag_par] = item
+    def register_item(tag_pair, item)
+      index[tag_pair] = item
     end
 
     def append_item(tag, start)
