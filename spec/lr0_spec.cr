@@ -1,24 +1,23 @@
-# coding: utf-8
 require "./spec_helper"
 
 def lr0
-  rule = Cabbage::Rule.new(:X, ['x', :X, :Y], nil)
-  Cabbage::LR0.new rule, 0
+  rule = Rule.new(:X, ['x', :X, :Y], stringify)
+  LR0.new rule, 0
 end
 
 def lr1
-  rule = Cabbage::Rule.new(:X, ['x', :X, :Y], nil)
-  Cabbage::LR0.new rule, 1
+  rule = Rule.new(:X, ['x', :X, :Y], stringify)
+  LR0.new rule, 1
 end
 
 def lr2
-  rule = Cabbage::Rule.new(:X, ['x', :X, :Y], nil)
-  Cabbage::LR0.new rule, 2
+  rule = Rule.new(:X, ['x', :X, :Y], stringify)
+  LR0.new rule, 2
 end
 
 def lr3
-  rule = Cabbage::Rule.new(:X, ['x', :X, :Y], nil)
-  Cabbage::LR0.new rule, 3
+  rule = Rule.new(:X, ['x', :X, :Y], stringify)
+  LR0.new rule, 3
 end
 
 describe Cabbage::LR0 do

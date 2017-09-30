@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 def rule
-  Cabbage::Rule.new(:X, ['x', :X, :Y], nil)
+  Rule.new(:X, ['x', :X, :Y], stringify)
 end
 
 describe Cabbage::Rule do

@@ -1,8 +1,8 @@
-struct Cabbage::Rule
+struct Cabbage::Rule(T)
   property symbol : GrammarSymbol
   property production : Array(GrammarSymbol)
-  property action : Proc(GrammarSymbol, Array(GrammarSymbol))?
-  property wants_sym
+  property action : Proc(Item(T), Deque(T), T)
+
 
   def initialize(@symbol, @production, @action)
   end

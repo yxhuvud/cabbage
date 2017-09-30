@@ -1,20 +1,18 @@
-class Cabbage::Parser
-  getter grammar : Grammar
-  getter sets : Array(Set)
-  getter current : Set
+class Cabbage::Parser(T)
+  getter grammar : Grammar(T)
+  getter sets : Array(Set(T))
+  getter current : Set(T)
 
-  @current : Cabbage::Set
+  @current : Cabbage::Set(T)
 
   def initialize(@grammar)
-    @current = Cabbage::Set.new(grammar, 0)
+    @current = Cabbage::Set(T).new(grammar, 0)
     @sets = [current]
-    current.predict grammar.start
+    current.predict(grammar.start)
     current.process
   end
 
   def consume_char(c)
-    puts current.to_s
-    puts "scanned #{c}"
     @current = current.scan(c)
     current.process
     sets << current
@@ -33,18 +31,14 @@ class Cabbage::Parser
     current.has_item?(accepted_rule)
   end
 
-  def accepted_item # Move to set?
+  def accepted_item
     current.index[accepted_rule]
   end
 
   def parse(input)
     process(input)
-    puts current.to_s
     if accepted_item?
-      puts :accepted_state
-      puts accepted_item.to_s
-      p accepted_item.left
-      p accepted_item.right
+      accepted_item.walk
     end
   end
 end

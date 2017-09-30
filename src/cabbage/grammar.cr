@@ -1,11 +1,12 @@
-struct Cabbage::Grammar
+struct Cabbage::Grammar(T)
   property start : GrammarSymbol
-  property rules : Hash(Nonterminal, Array(Rule))
+  property terminal : Proc(Terminal, T)
+  property rules : Hash(Nonterminal, Array(Rule(T)))
 
-  def initialize(@start, @rules)
+  def initialize(@start, @terminal, @rules)
   end
 
   def parse(input)
-    Cabbage::Parser.new(self).parse(input)
+    Cabbage::Parser(T).new(self).parse(input)
   end
 end

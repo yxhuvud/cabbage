@@ -1,7 +1,7 @@
 # coding: utf-8
 module Cabbage
-  struct LR0
-    property rule : Rule
+  struct LR0(T)
+    property rule : Rule(T)
     property dot : Int32
 
     def initialize(@rule, @dot)
