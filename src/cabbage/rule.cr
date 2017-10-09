@@ -1,5 +1,5 @@
 struct Cabbage::Rule(T)
-  property symbol : GrammarSymbol
+  property symbol : Nonterminal
   property production : Array(GrammarSymbol)
   property action : Proc(Item(T), Deque(T), T)
 
