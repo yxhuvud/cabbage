@@ -7,7 +7,7 @@ end
 
 def stringify
   ->(item : Cabbage::Item(String), args : Deque(String)) do
-    "(#{item.tag.as(Cabbage::LR0(String)).rule.symbol} #{args.join(" ")})"
+    "(#{item.lhs} #{args.join(" ")})"
   end
 end
 

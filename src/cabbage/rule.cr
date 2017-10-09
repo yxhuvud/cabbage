@@ -19,6 +19,10 @@ struct Cabbage::Rule(T)
     @production[start, stop - start].map { |c| pretty_sym(c) }.join
   end
 
+  def lhs
+    symbol
+  end
+
   private def pretty_sym(s)
     if s.is_a? Symbol
       s.to_s

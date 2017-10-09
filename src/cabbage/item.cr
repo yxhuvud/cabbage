@@ -37,8 +37,16 @@ module Cabbage
     end
 
     def nonterminal_action(args)
-      tag.as(LR0(T)).rule
-                    .action.call(self, args)
+      rule!.action.call(self, args)
+    end
+
+    def lhs
+      rule!.lhs
+    end
+
+    def rule!
+      tag.as(LR0(T))
+        .rule
     end
   end
 end
