@@ -83,7 +83,7 @@ module Cabbage
     end
 
     def tag
-      raise "x"
+      raise "UNREACHABLE"
     end
 
     def terminal_action(char)
