@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 describe Cabbage::DSL do
-  describe "definition" do
+  it "definition" do
     grammar = Cabbage::DSL(String).define do
       start :S
       terminal { |c| c.to_s }
@@ -15,7 +15,7 @@ describe Cabbage::DSL do
   end
 
   describe "rule contents" do
-    describe "empty" do
+    it "empty" do
       grammar = Cabbage::DSL(String).define do
         start :S
         terminal { |c| c.to_s }
@@ -30,7 +30,7 @@ describe Cabbage::DSL do
     # Covered in definition test
     # end
 
-    describe "with non-terminals" do
+    it "with non-terminals" do
       grammar = Cabbage::DSL(String).define do
         start :S
         terminal { |c| c.to_s }
