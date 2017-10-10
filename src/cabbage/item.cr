@@ -35,12 +35,16 @@ module Cabbage
       start.grammar.terminal.call(char)
     end
 
-    def nonterminal_action(args)
-      rule!.action.call(self, args)
+    def nonterminal_action(item)
+      rule!.action.call(item)
     end
 
     def lhs
-      rule!.lhs
+      if tag.is_a?(LR0(T))
+        rule!.lhs
+      else
+        tag
+      end
     end
 
     def rule!

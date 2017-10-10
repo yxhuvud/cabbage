@@ -17,13 +17,13 @@ module Cabbage
     end
 
     macro rule(lhs, *rhs)
-      action = action_catcher do |item, args|
+      %action = action_catcher do |item|
         {{ yield }}
       end
 
-      rhs = [{{*rhs}}] of Cabbage::GrammarSymbol
+      %rhs = [{{*rhs}}] of Cabbage::GrammarSymbol
 
-      add_rule rule_type.new({{lhs}}, rhs, action)
+      add_rule rule_type.new({{lhs}}, %rhs, %action)
     end
 
     def start(s : GrammarSymbol)
@@ -44,7 +44,7 @@ module Cabbage
     end
 
     # Can't access T in macro scope.
-    private def action_catcher(&block : Proc(Item(T), Deque(T), T))
+    private def action_catcher(&block : Proc(Item(T) | DerivationNode(T), T))
       block
     end
 

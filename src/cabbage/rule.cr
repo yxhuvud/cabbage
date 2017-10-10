@@ -1,7 +1,7 @@
 class Cabbage::Rule(T)
   property symbol : Nonterminal
   property production : Array(GrammarSymbol)
-  property action : Proc(Item(T), Deque(T), T)
+  property action : Proc(Item(T) | DerivationNode(T), T)
 
   def initialize(@symbol, @production, @action)
   end

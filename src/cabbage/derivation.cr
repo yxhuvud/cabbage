@@ -59,7 +59,7 @@ module Cabbage
       previous = @previous.not_nil!
       # Current is actual symbol and doesn't have nonterminal_action.
       # FIXME: remove symbol items as they are not necessary?
-      previous.nonterminal_action(rhs)
+      previous.nonterminal_action(self)
     end
 
     def rhs
@@ -110,8 +110,16 @@ module Cabbage
       raise "todo"
     end
 
-    def nonterminal_action(args)
+    def nonterminal_action(item)
       raise "UNREACHABLE"
+    end
+
+    def lhs
+      raise "UNREACHABLE (for now)"
+    end
+
+    def rule!
+      raise "UNREACHABLE (for now)"
     end
   end
 end

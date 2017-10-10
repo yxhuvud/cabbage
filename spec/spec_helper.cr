@@ -6,8 +6,8 @@ def terminal
 end
 
 def stringify
-  ->(item : Cabbage::Item(String), args : Deque(String)) do
-    "(#{item.lhs} #{args.join(" ")})"
+  ->(item : Cabbage::Item(String) | Cabbage::DerivationNode(String)) do
+    "(#{item.tag} #{item.rhs.join(" ")})"
   end
 end
 
