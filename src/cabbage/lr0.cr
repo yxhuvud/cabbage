@@ -4,9 +4,12 @@ module Cabbage
     property rule : Rule(T)
     property dot : UInt8
     property complete : Bool
+    property beginning_and_not_complete : Bool
 
     def initialize(@rule, @dot)
       @complete = dot == rule.size
+      @beginning_and_not_complete =
+        @dot == 0_u8 && !complete?
     end
 
     def to_s
@@ -34,6 +37,9 @@ module Cabbage
       end
     end
 
+    def beginning_and_not_complete?
+      @beginning_and_not_complete
+    end
 
     def complete?
       @complete

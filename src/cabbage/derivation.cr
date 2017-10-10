@@ -8,12 +8,14 @@ module Cabbage
       if !(previous || child)
         return
       end
-      # if left
-      #   left_tag = left.tag
-      #   if left_tag.is_a?(LR0) && left_tag.dot <= 1
-      #     left = left.right
-      #   end
-      # end
+
+   #   if previous
+      previous_tag = previous.tag
+      if previous_tag.is_a?(LR0) && previous_tag.beginning_and_not_complete?
+        previous = nil
+      end
+      #  end
+
       if !(self.previous || self.child)
         self.previous = previous
         self.child = child
@@ -90,7 +92,6 @@ module Cabbage
             child.walk
           end
         yield element
-      else
       end
     end
   end
