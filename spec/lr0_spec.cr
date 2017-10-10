@@ -2,22 +2,22 @@ require "./spec_helper"
 
 def lr0
   rule = Rule.new(:X, ['x', :X, :Y], stringify)
-  LR0.new rule, 0
+  LR0.new rule, 0_u8
 end
 
 def lr1
   rule = Rule.new(:X, ['x', :X, :Y], stringify)
-  LR0.new rule, 1
+  LR0.new rule, 1_u8
 end
 
 def lr2
   rule = Rule.new(:X, ['x', :X, :Y], stringify)
-  LR0.new rule, 2
+  LR0.new rule, 2_u8
 end
 
 def lr3
   rule = Rule.new(:X, ['x', :X, :Y], stringify)
-  LR0.new rule, 3
+  LR0.new rule, 3_u8
 end
 
 describe Cabbage::LR0 do

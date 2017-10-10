@@ -2,7 +2,7 @@
 module Cabbage
   struct LR0(T)
     property rule : Rule(T)
-    property dot : Int32
+    property dot : UInt8
 
     def initialize(@rule, @dot)
     end
@@ -28,7 +28,7 @@ module Cabbage
       if complete?
         symbol
       else
-        self.class.new(rule, dot + 1)
+        self.class.new(rule, dot + 1_u8)
       end
     end
 

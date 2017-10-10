@@ -33,7 +33,7 @@ module Cabbage
 
     def predict(sym)
       grammar.rules[sym].each do |rule|
-        lr_item = LR0(T).new(rule, 0)
+        lr_item = LR0(T).new(rule, 0_u8)
         add_item(lr_item, self)
       end
     end
