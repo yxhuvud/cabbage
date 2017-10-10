@@ -40,11 +40,7 @@ module Cabbage
     end
 
     def lhs
-      if tag.is_a?(LR0(T))
-        rule!.lhs
-      else
-        tag
-      end
+      tag
     end
 
     def rule!
