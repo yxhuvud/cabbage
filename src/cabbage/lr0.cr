@@ -3,8 +3,10 @@ module Cabbage
   struct LR0(T)
     property rule : Rule(T)
     property dot : UInt8
+    property complete : Bool
 
     def initialize(@rule, @dot)
+      @complete = dot == rule.size
     end
 
     def to_s
@@ -32,8 +34,9 @@ module Cabbage
       end
     end
 
+
     def complete?
-      dot == rule.size
+      @complete
     end
   end
 end
