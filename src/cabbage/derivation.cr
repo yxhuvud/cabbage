@@ -1,11 +1,11 @@
 module Cabbage
   module Derivation(T)
-    property left : Item(T) | DerivationNode(T) | Nil
-    property right : Item(T) | DerivationNode(T) | Nil
+    property previous : Item(T) | DerivationNode(T) | Nil
+    property child : Item(T) | DerivationNode(T) | Nil
     property next_derivation : Item(T) | DerivationNode(T) | Nil
 
-    def add_derivation(left, right)
-      if !(left || right)
+    def add_derivation(previous, child)
+      if !(previous || child)
         return
       end
       # if left
@@ -14,35 +14,39 @@ module Cabbage
       #     left = left.right
       #   end
       # end
-      if !(self.left || self.right)
-        self.left = left
-        self.right = right
-      elsif self.right
-        add_second_derivation left, right
+      if !(self.previous || self.child)
+        self.previous = previous
+        self.child = child
+      elsif self.child
+        add_second_derivation previous, child
       else
-        add_another_derivation left, right
+        add_another_derivation previous, child
       end
     end
 
-    def same?(left, right)
-      self.left == left && self.right == right
+    def same?(previous, child)
+      self.previous == previous && self.child == child
     end
 
-    def add_second_derivation(left, right)
-      unless same?(left, right)
-        old = DerivationNode(T).new(self.left, self.right, nil)
-        self.left = DerivationNode(T).new(left, right, old)
-        self.right = nil
+    def add_second_derivation(previous, child)
+      unless same?(previous, child)
+        old = DerivationNode(T).new(self.previous, self.child, nil)
+        #       self.previous = DerivationNode(T).new(previous, child, old)
+        #   self.child = nil
+        # # FIXME: Doublecheck against SPPF paper. This make more sense:
+        self.previous = previous
+        self.child = child
+        self.next_derivation = old
       end
     end
 
-    def add_another_derivation(left, right)
-      d = self.left
+    def add_another_derivation(previous, child)
+      d = self.previous
       while d
-        return if d.same?(left, right)
+        return if d.same?(previous, child)
         d = d.next_derivation
       end
-      self.left = DerivationNode(T).new(left, right, self.left)
+      self.previous = DerivationNode(T).new(previous, child, self.previous)
     end
 
     def derivation_list?
@@ -50,36 +54,51 @@ module Cabbage
     end
 
     def walk
-      args = Deque(T).new
-      left = @left
+      previous = @previous.not_nil!
+      # Current is actual symbol and doesn't have nonterminal_action.
+      # FIXME: remove symbol items as they are not necessary?
+      previous.nonterminal_action(rhs)
+    end
+
+    def rhs
+      # Getting all children by iterating backwards through the item.
+      # Doesn't currently handle multiple derivations.
+      tree_node = Deque(T).new
+      previous = @previous
 
       # if next_derivation
       #   p next_derivation.not_nil!.walk
       # end
 
-      while left
-        # if left.next_derivation
-        #   p left.walk
+      while previous
+        # if previous.next_derivation
+        #   p previous.walk
         # end
-        if right = left.right
-          tag = right.tag
-          if tag.is_a?(Terminal)
-            args.unshift(left.terminal_action(tag))
-          else
-            args.unshift right.walk.as(T)
-          end
-        end
-        left = left.left
+        evaluate(previous) { |element| tree_node.unshift element }
+        previous = previous.previous
       end
-      left = @left.not_nil!
-      left.nonterminal_action(args)
+      tree_node
+    end
+
+    def evaluate(prev)
+      if child = prev.child
+        tag = child.tag
+        element =
+          if tag.is_a?(Terminal)
+            prev.terminal_action(tag)
+          else
+            child.walk
+          end
+        yield element
+      else
+      end
     end
   end
 
   class DerivationNode(T)
     include Derivation(T)
 
-    def initialize(@left, @right, @next_derivation)
+    def initialize(@previous, @child, @next_derivation)
     end
 
     def tag
@@ -91,7 +110,7 @@ module Cabbage
     end
 
     def nonterminal_action(args)
-      raise "todo"
+      raise "UNREACHABLE"
     end
   end
 end
