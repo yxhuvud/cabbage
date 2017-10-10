@@ -1,8 +1,7 @@
-struct Cabbage::Rule(T)
+class Cabbage::Rule(T)
   property symbol : Nonterminal
   property production : Array(GrammarSymbol)
   property action : Proc(Item(T), Deque(T), T)
-
 
   def initialize(@symbol, @production, @action)
   end

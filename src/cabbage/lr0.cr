@@ -1,14 +1,22 @@
 module Cabbage
-  struct LR0(T)
+  class LR0(T)
     property rule : Rule(T)
     property dot : UInt8
     property complete : Bool
     property beginning_and_not_complete : Bool
+    property grammar : Grammar(T)
+    property advance : LR0(T) | Nonterminal
 
-    def initialize(@rule, @dot)
+    def initialize(@rule, @dot, @grammar)
       @complete = dot == rule.size
       @beginning_and_not_complete =
         @dot == 0_u8 && !complete?
+      @advance =
+        if complete?
+          symbol
+        else
+          grammar.lr0({rule, dot + 1_u8})
+        end
     end
 
     def to_s
@@ -29,11 +37,7 @@ module Cabbage
     end
 
     def advance
-      if complete?
-        symbol
-      else
-        self.class.new(rule, dot + 1_u8)
-      end
+      @advance
     end
 
     def beginning_and_not_complete?

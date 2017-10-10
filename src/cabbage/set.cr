@@ -33,7 +33,7 @@ module Cabbage
 
     def predict(sym)
       grammar.rules[sym].each do |rule|
-        lr_item = LR0(T).new(rule, 0_u8)
+        lr_item = grammar.lr0({rule, 0_u8})
         add_item(lr_item, self)
       end
     end
@@ -61,8 +61,8 @@ module Cabbage
       items << item
       register_item({tag, start.position}, item)
       return item if tag.is_a?(GrammarSymbol)
-      sym = tag.next_symbol
-      if sym
+
+      if sym = tag.next_symbol
         wants[sym] = [] of Item(T) unless wants.has_key?(sym)
         wants[sym] << item
       else # empty rule, add the symbol
