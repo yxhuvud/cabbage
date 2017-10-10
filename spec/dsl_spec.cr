@@ -6,9 +6,7 @@ describe Cabbage::DSL do
       start :S
       terminal { |c| c.to_s }
 
-      rule(:S, 'b') do |item, args|
-        "(#{item.lhs} #{args.join(" ")})"
-      end
+      rule(:S, 'b') { |item, args| "(#{item.lhs} #{args.join(" ")})" }
     end
 
     grammar.start.as(Symbol).should eq :S
@@ -22,7 +20,7 @@ describe Cabbage::DSL do
         start :S
         terminal { |c| c.to_s }
 
-        rule(:S) { |item, args| "(#{item.lhs})" }
+        rule(:S) { |item, _| "(#{item.lhs})" }
       end
 
       grammar.parse("").should eq "(S)"
@@ -39,7 +37,7 @@ describe Cabbage::DSL do
 
         rule(:S, :A) { |item, args| args.join(" ") }
         rule(:A, :C, 'b') { |item, args| "(#{args[0]})#{args[1]}" }
-        rule(:C, :C, 'x') { args.join }
+        rule(:C, :C, 'x') { |item, args| args.join }
         rule(:C) { "" }
       end
 
