@@ -100,7 +100,7 @@ module Cabbage
     def process_range(start, stop)
       start.upto(stop) do |i|
         item = items[i]
-        if item.tag.is_a?(LR0)
+        if item.tag.is_a?(LR0(T))
           item.predict(self)
         else
           item.complete

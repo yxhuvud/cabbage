@@ -16,8 +16,7 @@ module Cabbage
     end
 
     def predict(current)
-      t = tag.as(LR0)
-      sym = t.next_symbol
+      sym = lr0!.next_symbol
       if sym.is_a?(Nonterminal)
         current.predict(sym)
       end
@@ -25,7 +24,7 @@ module Cabbage
 
     def complete
       start.each_wanted_for(tag) do |item|
-        next_tag = item.tag.as(LR0)
+        next_tag = item.lr0!
         added_or_existing = stop.add_item(next_tag.advance, item.start) ||
                             stop.item(next_tag.advance, item.start)
         added_or_existing.add_derivation(item, self)
@@ -45,8 +44,11 @@ module Cabbage
     end
 
     def rule!
+      lr0!.rule
+    end
+
+    def lr0!
       tag.as(LR0(T))
-        .rule
     end
   end
 end
