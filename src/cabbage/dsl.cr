@@ -65,5 +65,14 @@ module Cabbage
 
       Grammar(T).new(start, terminal, rules)
     end
+
+    private def symbolize(val : Terminal | Symbol)
+      case val
+      when Symbol
+        Nonterminal.get_or_new(val)
+      else
+        val
+      end
+    end
   end
 end

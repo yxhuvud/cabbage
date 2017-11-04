@@ -22,6 +22,10 @@ class Cabbage::Rule(T)
     symbol
   end
 
+  def empty?
+    @production.any?
+  end
+
   private def pretty_sym(s)
     if s.is_a? Symbol
       s.to_s

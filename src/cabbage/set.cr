@@ -1,5 +1,4 @@
 module Cabbage
-  alias Nonterminal = Symbol
   alias Terminal = Char
   alias GrammarSymbol = Nonterminal | Terminal
 
@@ -8,7 +7,6 @@ module Cabbage
 
     property grammar : Grammar(T)
     property position : Int32
-    property items : Array(Item(T))
     property index : Hash(Tuple(LR0(T) | GrammarSymbol, Int32), Item(T))
     property wants : Hash(GrammarSymbol, Array(Item(T)))
 
@@ -36,6 +34,15 @@ module Cabbage
         lr_item = grammar.lr0({rule, 0_u8})
         add_item(lr_item, self)
       end
+    end
+
+    def items
+      @index.values
+    end
+
+    def register_transition(sym : Nonterminal, item : Item(T))
+      @wants[sym] ||= Array(Item(T)).new(1)
+      @wants[sym] << item
     end
 
     def add_item(tag, start)
@@ -89,14 +96,6 @@ module Cabbage
       end
     end
 
-    def each_wanted_for(tag)
-      if wants.has_key?(tag)
-        wants[tag].each do |item|
-          yield item
-        end
-      end
-    end
-
     def process_range(start, stop)
       start.upto(stop) do |i|
         item = items[i]
@@ -106,6 +105,18 @@ module Cabbage
           item.complete
         end
       end
+    end
+
+    def each_wanted_for(tag)
+      if wants.has_key?(tag)
+        wants[tag].each do |item|
+          yield item
+        end
+      end
+    end
+
+    def empty?
+      items.empty?
     end
   end
 end

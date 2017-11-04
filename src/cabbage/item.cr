@@ -16,10 +16,13 @@ module Cabbage
     end
 
     def predict(current)
-      sym = lr0!.next_symbol
-      if sym.is_a?(Nonterminal)
-        current.predict(sym)
+      if next_sym.is_a?(Nonterminal)
+        current.predict(next_sym)
       end
+    end
+
+    def next_sym
+      lr0!.next_symbol
     end
 
     def complete
