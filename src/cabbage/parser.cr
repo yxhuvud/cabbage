@@ -19,7 +19,7 @@ class Cabbage::Parser(T)
       reduce(index)
       memoize_transitions(index)
     end
-    #sets[position].
+    # sets[position].
     accepted?
   end
 
@@ -29,7 +29,6 @@ class Cabbage::Parser(T)
 
     if items
       items.each do |item|
-
       end
     end
   end
@@ -56,14 +55,12 @@ class Cabbage::Parser(T)
       # Fixme: Own exception
       raise <<-EOS
         Parse failed at position #{@consumed}
-        #{ snippet }
+        #{snippet}
         EOS
     end
   end
 
-  private
-
-  def each_earley_step(input)
+  private def each_earley_step(input)
     index = 1 + @consumed
     input.each_char do |c|
       yield i, c
@@ -72,25 +69,25 @@ class Cabbage::Parser(T)
     end
   end
 
-  def memoize_transitions(i : Int32)
+  private def memoize_transitions(i : Int32)
     sets[i].items.each do |item|
       add_symbol(item.next_sym, i, item)
     end
   end
 
-  def add_symbol(sym : Terminal, i : Int32, item : Item(T))
+  private def add_symbol(sym : Terminal, i : Int32, item : Item(T))
   end
 
-  def add_symbol(sym : Nonterminal, i : Int32, item : Item(T))
+  private def add_symbol(sym : Nonterminal, i : Int32, item : Item(T))
     sets[i]
   end
 
-  def accepted_item
+  private def accepted_item
     sets[consumed].index[accepted_rule]
   end
 
   # Fixme: Support for multiples.
-  def accepted_rule
+  private def accepted_rule
     {grammar.start, 0}
   end
 end

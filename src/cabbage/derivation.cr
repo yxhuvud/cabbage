@@ -9,7 +9,7 @@ module Cabbage
         return
       end
 
-   #   if previous
+      #   if previous
       previous_tag = previous.tag
       if previous_tag.is_a?(LR0) && previous_tag.beginning_and_not_complete?
         previous = nil

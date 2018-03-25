@@ -4,7 +4,6 @@ class Cabbage::Grammar(T)
   property rules : Hash(Nonterminal, Array(Rule(T)))
   property e_nonterminals : Hash(Nonterminal, Nonterminal)
 
-
   def initialize(@start, @terminal, @rules)
     @e_nonterminals = Hash(Nonterminal, Nonterminal).new
     rewrite_to_nihilistic_normal_form
