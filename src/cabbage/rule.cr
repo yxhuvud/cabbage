@@ -11,10 +11,10 @@ class Cabbage::Rule(T)
   end
 
   def to_s
-    "#{symbol} -> #{pretty_production}"
+    "#{symbol.to_s} -> #{pretty_production}"
   end
 
-  def pretty_production(start = 0, stop = rule.size)
+  def pretty_production(start = 0, stop = production.size)
     @production[start, stop - start].map { |c| pretty_sym(c) }.join
   end
 
@@ -22,12 +22,10 @@ class Cabbage::Rule(T)
     symbol
   end
 
-  def empty?
-    @production.any?
-  end
+  delegate empty?, to: @production
 
   private def pretty_sym(s)
-    if s.is_a? Symbol
+    if s.is_a? Nonterminal
       s.to_s
     else
       "'#{s}'"

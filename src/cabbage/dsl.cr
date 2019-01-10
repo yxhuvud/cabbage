@@ -23,7 +23,7 @@ module Cabbage
 
       %rhs = [{{*rhs}}] of Cabbage::GrammarSymbol
 
-      add_rule rule_type.new({{lhs}}, %rhs, %action)
+      add_rule {{lhs}}, %rhs, %action
     end
 
     def start(s : GrammarSymbol)
@@ -34,13 +34,8 @@ module Cabbage
       @terminal_action = block
     end
 
-    # Can't access T in macro scope.
-    private def rule_type
-      Rule(T)
-    end
-
-    private def add_rule(rule)
-      @rules << rule
+    private def add_rule(lhs, rhs, action)
+      @rules << {lhs, rhs, action}
     end
 
     # Can't access T in macro scope.
@@ -51,27 +46,16 @@ module Cabbage
     def finish!
       start = @start_symbol
       terminal = @terminal_action
-      rules = Hash(Nonterminal, Array(Rule(T))).new
-
-      @rules.each do |rule|
-        rules[rule.lhs] ||= [] of Rule(T)
-        rules[rule.lhs] << rule
-      end
 
       # FIXME: Own errors
       raise ArgumentError.new "No start symbol declared" unless start
       raise ArgumentError.new "No terminal action declared" unless terminal
       raise ArgumentError.new "No rules declared" if @rules.empty?
 
-      Grammar(T).new(start, terminal, rules)
-    end
-
-    private def symbolize(val : Terminal | Symbol)
-      case val
-      when Symbol
-        Nonterminal.get_or_new(val)
-      else
-        val
+      rules.each do |(lhs, rhs, action)|
+        Grammar(T).new(start, terminal) do |g|
+          g.add_rule(lhs, rhs, action)
+        end
       end
     end
   end
