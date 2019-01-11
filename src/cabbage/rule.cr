@@ -3,6 +3,23 @@ class Cabbage::Rule(T)
   property production : Array(GrammarSymbol)
   property action : Proc(Item(T) | DerivationNode(T), T)
 
+  def self.new(symbol_table, lhs : Symbol, production, action)
+    sym = symbol_table.lookup(lhs)
+    prod = Array(GrammarSymbol).new
+    production.each do |sym_or_char|
+      prod <<
+        case sym_or_char
+        when Symbol
+          symbol_table.lookup(sym_or_char.to_s)
+        when Char
+          sym_or_char
+        else
+          raise "Unreachable"
+        end
+    end
+    new(sym, prod, action)
+  end
+
   def initialize(@symbol, @production, @action)
   end
 
@@ -15,11 +32,19 @@ class Cabbage::Rule(T)
   end
 
   def pretty_production(start = 0, stop = production.size)
-    @production[start, stop - start].map { |c| pretty_sym(c) }.join
+    if empty?
+      "ε"
+    else
+      @production[start, stop - start].map { |c| pretty_sym(c) }.join
+    end
   end
 
   def lhs
     symbol
+  end
+
+  def rhs
+    production
   end
 
   delegate empty?, to: @production

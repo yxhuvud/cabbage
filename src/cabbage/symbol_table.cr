@@ -13,7 +13,7 @@ module Cabbage
     def lookup(sym : Symbol)
       lookup sym.to_s
     end
-    
+
     def lookup(string)
       if val = lookup_table[string]?
         val
@@ -31,7 +31,7 @@ module Cabbage
 
     def generate_e_nonterminal_for(sym)
       return sym if e_nonterminal?(sym)
-      e = lookup(to_s(sym) + 'ϵ')
+      e = lookup(to_s(sym) + 'ε')
       e_nonterminals << e
       e
     end
@@ -39,7 +39,7 @@ module Cabbage
     def to_s(sym)
       @nonterminals[sym.value]
     end
-    
+
     def all_e_nons
       @nonterminals.values_at e_nonterminals
     end
